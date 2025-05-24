@@ -7,7 +7,7 @@ apt install git -y
 
 # Cloning the repository (replace with your own GitHub repo if available)
 rm -rf FarHadCrypteX
-git clone https://github.com/YourGitHubUsername/FarHadCrypteX
+git clone https://github.com/osmangani097/FarHadCrypteX
 cd FarHadCrypteX
 
 # Setting permissions
