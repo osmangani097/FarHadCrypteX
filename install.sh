@@ -15,4 +15,4 @@ chmod 777 *
 git pull
 
 
-python3 farhad.py
+python3 FarHadCrypteX.py
