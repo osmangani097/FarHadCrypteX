@@ -32,8 +32,7 @@ print('''
 
 ''')
 
- print("FARHAD CRYPTEX - ADVANCED FLOOD TOOL v2.0")
-''')
+print("FARHAD CRYPTEX - ADVANCED FLOOD TOOL v2.0")
 
 if len(sys.argv) < 3:
     print(Fore.YELLOW + "Usage: python3 FarHadCrypteX.py <url> <threads>")
