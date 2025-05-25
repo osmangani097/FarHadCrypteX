@@ -23,7 +23,7 @@ print(Fore.CYAN + '''
 ''')
 
 if len(sys.argv) < 3:
-    print(Fore.YELLOW + "Usage: python3 farhad_advanced.py <url> <threads>")
+    print(Fore.YELLOW + "Usage: python3 FarHadCrypteX.py <url> <threads>")
     sys.exit()
 
 url = sys.argv[1]
